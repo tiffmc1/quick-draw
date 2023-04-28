@@ -5,19 +5,75 @@
 			name="viewport"
 			content="width=device-width, maximum-scale=0.9, user-scalable=0"
 		/>
+		<meta charset="UTF-8" />
 		<title>Quick Draw Sketchpad</title>
 		<link rel="stylesheet" href="styles.css" />
 	</head>
+
 	<body>
-		<section id="content">
+		<main id="content">
 			<h1>Quick Draw Sketchpad</h1>
 			<br />
-			<p id="sketchPadContainer"></p>
-		</section>
+
+			<input type="text" id="name" placeholder="Name" />
+			<span id="instructions"></span>
+			<button id="startBtn" onclick="onStart()">Start</button>
+
+			<section id="sketchPadContainer" style="visibility: hidden"></section>
+		</main>
+
 		<script src="js/draw.js"></script>
 		<script src="js/sketchPad.js"></script>
 		<script>
+			let index = 0;
+			const labels = [
+				"fish",
+				"house",
+				"tree",
+				"fruit",
+				"pokemon",
+				"dog",
+				"sailboat",
+				"cat",
+				"flower",
+				"bicycle",
+			];
+			const user = {
+				name: null,
+				session: new Date().getTime(),
+				drawings: {},
+			};
+
 			const sketchPad = new SketchPad(sketchPadContainer);
+
+			const onStart = () => {
+				const name = document.getElementById("name");
+
+				if (name.value == "") {
+					alert("Please enter a name.");
+					return;
+				}
+				user.id = name.value;
+				name.style.display = "none";
+				sketchPadContainer.style.visibility = "visible";
+				const label = labels[index];
+				instructions.innerHTML = `Please draw a ${label}.`;
+				startBtn.innerHTML = "Next";
+				startBtn.onclick = onNext;
+			};
+
+			const onNext = () => {
+				if (sketchPad.paths.length === 0) {
+					alert("Draw something first!");
+					return;
+				}
+				const label = labels[index];
+				user.drawings[label] = sketchPad.paths;
+				sketchPad.reset();
+				index++;
+				const nextLabel = labels[index];
+				instructions.innerHTML = `Please draw a ${nextLabel}.`;
+			};
 		</script>
 	</body>
 </html>
