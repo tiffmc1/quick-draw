@@ -33,12 +33,27 @@ class SketchPad {
 		this.canvas.onmouseup = () => {
 			this.isDrawing = false;
 		};
+
+		// "touch" events for mobile
+		this.canvas.ontouchstart = (evt) => {
+			const loc = evt.touches[0];
+			this.canvas.onmousedown(loc);
+		};
+
+		this.canvas.ontouchmove = (evt) => {
+			const loc = evt.touches[0];
+			this.canvas.onmousemove(loc);
+		};
+
+		this.canvas.ontouchend = () => {
+			this.canvas.onmouseup();
+		};
 	}
 
 	#redraw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		draw.paths(this.ctx, this.paths, "black");
+		draw.paths(this.ctx, this.paths);
 	}
 
 	#getMouseLocation = (evt) => {
