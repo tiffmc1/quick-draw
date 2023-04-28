@@ -13,6 +13,10 @@ class SketchPad {
 		this.undoBtn.innerHTML = "Undo";
 		container.appendChild(this.undoBtn);
 
+		this.restartBtn = document.createElement("button");
+		this.restartBtn.innerHTML = "Restart";
+		container.appendChild(this.restartBtn);
+
 		this.ctx = this.canvas.getContext("2d");
 
 		this.reset();
@@ -66,14 +70,23 @@ class SketchPad {
 			this.paths.pop();
 			this.#redraw();
 		};
+
+		// restart event
+		this.restartBtn.onclick = () => {
+			this.reset();
+		};
 	}
 
 	#redraw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		draw.paths(this.ctx, this.paths);
-		this.paths.length > 0
-			? (this.undoBtn.disabled = false)
-			: (this.undoBtn.disabled = true);
+		if (this.paths.length > 0) {
+			this.undoBtn.disabled = false;
+			this.restartBtn.disabled = false;
+		} else {
+			this.undoBtn.disabled = true;
+			this.restartBtn.disabled = true;
+		}
 	}
 
 	#getMouseLocation = (evt) => {
