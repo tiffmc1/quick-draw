@@ -46,7 +46,7 @@
 				name.style.display = "none";
 				sketchPadContainer.style.visibility = "visible";
 				const label = labels[index];
-				instructions.innerHTML = `Please draw a ${label}.`;
+				instructions.innerHTML = `Please draw a ${label}`;
 				startBtn.innerHTML = "Next";
 				startBtn.onclick = onNext;
 			};
@@ -62,7 +62,7 @@
 				index++;
 				if (index < labels.length) {
 					const nextLabel = labels[index];
-					instructions.innerHTML = `Please draw a ${nextLabel}.`;
+					instructions.innerHTML = `Please draw a ${nextLabel}`;
 				} else {
 					sketchPadContainer.style.visibility = "hidden";
 					instructions.innerHTML = "Save your artwork!";
