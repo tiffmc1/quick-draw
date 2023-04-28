@@ -26,18 +26,7 @@
 		<script src="js/sketchPad.js"></script>
 		<script>
 			let index = 0;
-			const labels = [
-				"fish",
-				"house",
-				"tree",
-				"fruit",
-				"pokemon",
-				"dog",
-				"sailboat",
-				"cat",
-				"flower",
-				"bicycle",
-			];
+			const labels = ["sailboat", "fruit", "dog", "flower"];
 			const user = {
 				name: null,
 				session: new Date().getTime(),
@@ -71,8 +60,36 @@
 				user.drawings[label] = sketchPad.paths;
 				sketchPad.reset();
 				index++;
-				const nextLabel = labels[index];
-				instructions.innerHTML = `Please draw a ${nextLabel}.`;
+				if (index < labels.length) {
+					const nextLabel = labels[index];
+					instructions.innerHTML = `Please draw a ${nextLabel}.`;
+				} else {
+					sketchPadContainer.style.visibility = "hidden";
+					instructions.innerHTML = "Save your artwork!";
+					startBtn.innerHTML = "Save";
+					startBtn.onclick = onSave;
+				}
+			};
+
+			const onSave = () => {
+				startBtn.style.display = "none";
+				instructions.innerHTML =
+					"Take your downloaded file and place it alongside the others in the dataset.";
+
+				const element = document.createElement("a");
+				element.setAttribute(
+					"href",
+					"data:text/plain;charset=utf-8," +
+						encodeURIComponent(JSON.stringify(user))
+				);
+
+				const fileName = user.session + ".json";
+				element.setAttribute("download", fileName);
+
+				element.style.display = "none";
+				document.body.appendChild(element);
+				element.click();
+				document.body.removeChild(element);
 			};
 		</script>
 	</body>
