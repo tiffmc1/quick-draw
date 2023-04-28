@@ -3,11 +3,11 @@ class SketchPad {
 		this.canvas = document.createElement("canvas");
 		this.canvas.width = size;
 		this.canvas.height = size;
-		this.canvas.style = `background-color: white; box-shadow: 0px 0px 10px 1px black; border-radius: 3px; cursor: crosshair;`;
+		this.canvas.style = `background-color: white; box-shadow: 0px 0px 10px 1px black; cursor: crosshair;`;
 		container.appendChild(this.canvas);
 
-		this.context = this.canvas.getContext("2d");
-		this.path = [];
+		this.ctx = this.canvas.getContext("2d");
+		this.paths = [];
 		this.isDrawing = false;
 		this.#addEventListeners();
 	}
@@ -15,7 +15,7 @@ class SketchPad {
 	#addEventListeners() {
 		this.canvas.onmousedown = (evt) => {
 			const mouse = this.#getMouseLocation(evt);
-			this.path = [mouse];
+			this.paths.push([mouse]);
 			this.isDrawing = true;
 			// console.log(rect);
 			// console.log(mouse);
@@ -24,14 +24,21 @@ class SketchPad {
 		this.canvas.onmousemove = (evt) => {
 			if (this.isDrawing) {
 				const mouse = this.#getMouseLocation(evt);
-				this.path.push(mouse);
-				//console.log(this.path.length);
+				const getLastPath = this.paths[this.paths.length - 1];
+				getLastPath.push(mouse);
+				this.#redraw();
 			}
 		};
 
 		this.canvas.onmouseup = () => {
 			this.isDrawing = false;
 		};
+	}
+
+	#redraw() {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+		draw.paths(this.ctx, this.paths, "black");
 	}
 
 	#getMouseLocation = (evt) => {
