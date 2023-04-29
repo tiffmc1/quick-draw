@@ -1,7 +1,14 @@
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: skyblue;
+	font-family: "Gloria Hallelujah", cursive;
+	background: radial-gradient(
+			ellipse at top,
+			rgba(119, 209, 245, 0.959),
+			transparent
+		),
+		radial-gradient(ellipse at bottom, rgba(243, 184, 22, 0.945), transparent);
+	background-size: 100vw 100vh;
 	touch-action: none;
+	font-size: large;
 }
 
 #content {
@@ -15,16 +22,16 @@ body {
 button {
 	cursor: pointer;
 	border: none;
-	margin: 5px;
-	padding: 2px 10px;
+	margin: 5px 3px 10px 3px;
+	padding: 3px 10px;
 	height: 22px;
 	border-radius: 5px;
-	background-color: navy;
+	background-color: darkcyan;
 	color: white;
 }
 
 button:hover {
-	background-color: mediumblue;
+	background-color: rgba(197, 148, 25, 0.938);
 }
 
 button:disabled,
