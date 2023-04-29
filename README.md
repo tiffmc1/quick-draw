@@ -10,6 +10,7 @@ This project idea came about while taking Google's Data Analytics Course through
 
 - JavaScript
 - Semantic HTML5
+- Hosted with GitHub Pages
 
 ## Installation
 
